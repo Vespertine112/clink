@@ -1,0 +1,8 @@
+brave-bin
+lxpolkit-git
+openrazer-meta
+openrgb
+private-internet-access-vpn
+proton
+python2
+visual-studio-code-bin
