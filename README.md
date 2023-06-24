@@ -1,2 +1,2 @@
 # clink
-(WIP framework) A tool and framework for bottom to top config migration to new machines 
+A tool for migrating my config to any machine
