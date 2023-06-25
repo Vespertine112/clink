@@ -45,4 +45,5 @@ class starship(PluginScaffold):
             'export',
             f'STARSHIP_CONFIG=~{dotfilePath}/starship.toml'
             ]
-            subprocess.run(command, shell=True, check=True)
+            print(command)
+            subprocess.run(command)
