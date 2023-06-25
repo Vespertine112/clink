@@ -5,7 +5,6 @@ import os
 import subprocess
 import sys
 from typing import List
-import python-pacman
 
 
 class Shell(Enum):
