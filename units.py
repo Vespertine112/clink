@@ -99,7 +99,7 @@ class PluginController:
             packages = file.read().splitlines()
 
         # Install packages with pacman
-        pacman_command = ['sudo', 'pacman', '--noconfirm', '-Sy']
+        pacman_command = ['pacman', '--noconfirm', '-Sy']
         pacman_command.extend(packages)
         subprocess.Popen(pacman_command, shell=True)
 
@@ -108,7 +108,7 @@ class PluginController:
             packages_aur = file.read().splitlines()
 
         # Install packages with yay
-        yay_command = ['sudo', 'yay', '--noconfirm', '-Sy']
+        yay_command = ['yay', '--noconfirm', '-Sy']
         yay_command.extend(packages_aur)
         subprocess.Popen(yay_command, shell=True)
 
