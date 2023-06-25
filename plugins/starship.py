@@ -17,8 +17,14 @@ class starship(PluginScaffold):
 
     def download(self):
         """Download also handles installation"""
-        command = ["curl", "-sS", "https://starship.rs/install.sh"]
-        subprocess.run(command, shell=False, check=True, text=True, capture_output=True)
+        command = [
+            'curl',
+            '-sS',
+            'https://starship.rs/install.sh'
+        ]
+        curl_process = subprocess.Popen(command, stdout=subprocess.PIPE)
+        subprocess.run(['sh'], stdin=curl_process.stdout, check=True)
+
 
     def install(self):
         pass
