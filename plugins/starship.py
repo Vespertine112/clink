@@ -1,9 +1,10 @@
-from units import PluginScaffold, Shell
+from units import PluginScaffold, Shell, OS
 import subprocess
 import os
 
 class starship(PluginScaffold):
     plugin_name = "starship"
+    supported_platforms:OS = [OS.linux, OS.windows]
 
     def __repr__(self):
         return self.plugin_name
@@ -22,9 +23,9 @@ class starship(PluginScaffold):
     def install(self):
         pass
     
-    def configure(self, shell:Shell, dotfilePath:str):
+    def configure(self, shell:Shell, op_sys:OS, dotfilePath:str):
         
-        if (shell == Shell.pwrsh):
+        if (shell == Shell.pwrsh and op_sys == OS.windows):
             print(f"Configuring for powershell")
             command = [
             'powershell',
@@ -33,7 +34,7 @@ class starship(PluginScaffold):
             ]
             subprocess.run(command, shell=False, check=True)
 
-        if (shell == Shell.zsh):
+        if (shell == Shell.zsh and op_sys == OS.linux):
             command = [
             'export',
             f'STARSHIP_CONFIG=~{dotfilePath}/starship.toml'

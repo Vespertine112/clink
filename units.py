@@ -2,6 +2,8 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 import os
+import sys
+from typing import List
 
 class Shell(Enum):
     zsh = 1
@@ -9,7 +11,12 @@ class Shell(Enum):
     bash = 3
     fish = 4
 
+class OS(Enum):
+    windows = 1
+    linux = 2
+
 class PluginScaffold(ABC):
+    supported_platforms:List[OS] = []
 
     @abstractmethod
     def download(self):
@@ -31,7 +38,8 @@ class PluginScaffold(ABC):
 class PluginController:
     """The plugin controller maintains the list of all plugins and controls their execution"""
     _instance = None
-    plugins:PluginScaffold
+    plugins:List[PluginScaffold] = []
+    supported_platforms:OS = []
 
     def __new__(cls):
         if cls._instance is None:
@@ -50,7 +58,9 @@ class PluginController:
         shell = os.environ.get('SHELL', '').lower()
         comspec = os.environ.get('COMSPEC', '').lower()
 
-        live_shell = ""
+        # Check shell & set enum
+        live_shell:Shell = ""
+        op_sys:OS = ""
         if 'bash' in shell:
             live_shell = Shell.bash
         elif 'zsh' in shell:
@@ -63,10 +73,22 @@ class PluginController:
             print("Failure to identify shell!")
             exit(-1)
 
+        # Check OS and set enum
+        if sys.platform.startswith('win'):
+            op_sys = OS.windows
+        elif sys.platform.startswith('linux'):
+            op_sys = OS.linux
+        else:
+            print("Failure to identify operating system!")
+            exit(-1)
+
         for plugin in self.plugins:
-            plugin.download()
-            plugin.install()
-            plugin.configure(live_shell, dotfilePath)
+            if op_sys in plugin.supported_platforms:
+                plugin.download()
+                plugin.install()
+                plugin.configure(live_shell, op_sys, dotfilePath)
+            else:
+                print(f"Your operating system does not support {plugin}")
 
 
 
