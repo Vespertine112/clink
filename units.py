@@ -41,6 +41,7 @@ class PluginController:
     _instance = None
     plugins:List[PluginScaffold] = []
     supported_platforms:OS = []
+    dotfilesPath:str = ""
 
     def __new__(cls):
         if cls._instance is None:
@@ -55,7 +56,7 @@ class PluginController:
         for plugin in self.plugins:
             print(plugin)
 
-    def run_plugins(self, dotfilePath):
+    def run_plugins(self):
         shell = os.environ.get('SHELL', '').lower()
         comspec = os.environ.get('COMSPEC', '').lower()
 
@@ -87,10 +88,28 @@ class PluginController:
             if op_sys in plugin.supported_platforms:
                 plugin.download()
                 plugin.install()
-                plugin.configure(live_shell, op_sys, dotfilePath)
+                plugin.configure(live_shell, op_sys, self.dotfilesPath)
             else:
                 print(f"Your operating system does not support {plugin}")
+    
+    def install_packages(self):
+        # Read package names from pkglist.txt
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist.txt'), 'r') as file:
+            packages = file.read().splitlines()
 
+        # Install packages with pacman
+        pacman_command = ['pacman', '--noconfirm', '-Sy']
+        pacman_command.extend(packages)
+        subprocess.run(pacman_command, shell=True, check=True)
+
+        # Read package names from pkglist_aur.txt
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
+            packages_aur = file.read().splitlines()
+
+        # Install packages with yay
+        yay_command = ['yay', '--noconfirm', '-Sy']
+        yay_command.extend(packages_aur)
+        subprocess.run(yay_command, shell=True, check=True)
 
 
 class Logger:

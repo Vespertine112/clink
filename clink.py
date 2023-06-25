@@ -17,24 +17,34 @@ def main():
     parser.add_argument("-c", "--clank", action="store_true", help="Run the config migration")
     parser.add_argument("-l", "--list", action="store_true", help="List the packages which will be manually configured on clank")
     parser.add_argument("-d", "--dotfiles", type=str, help="Path for dotfiles. Needs to be a relative path from home dir!!!")
+    parser.add_argument("-p", "--packages", action="store_true", help="install packages")
     args = parser.parse_args()
 
+    if (args.dotfiles):
+        PluginController().dotfilesPath = args.dotfiles
+    
     if (args.list):
         list()
 
     if (args.sync):
         sync()
         exit(1)
-    
-    if (args.clank and args.dotfiles):
-        clank(args.dotfiles)
+
+    if (args.clank):
+        clank()
         exit(1)
+
+    if (args.packages):
+        install_packages()
+
+def install_packages():
+    PluginController().install_packages()
 
 def list():
     PluginController().list_plugins()
 
-def clank(dotfilesPath):
-    PluginController().run_plugins(dotfilesPath)
+def clank():
+    PluginController().run_plugins()
     pass
 
 def sync():
