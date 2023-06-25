@@ -101,7 +101,7 @@ class PluginController:
         # Install packages with pacman
         pacman_command = ['pacman', '--noconfirm', '-Sy']
         pacman_command.extend(packages)
-        subprocess.run(pacman_command, shell=True)
+        subprocess.Popen(pacman_command, shell=True, stderr='/dev/stderr', stdin='/dev/stdin')
 
         # Read package names from pkglist_aur.txt
         # with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
