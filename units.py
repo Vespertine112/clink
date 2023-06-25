@@ -101,7 +101,7 @@ class PluginController:
         # Install packages with pacman
         pacman_command = ['sudo', 'pacman', '--noconfirm', '-Sy']
         pacman_command.extend(packages)
-        subprocess.Popen(pacman_command, shell=True, check=True)
+        subprocess.Popen(pacman_command, shell=True)
 
         # Read package names from pkglist_aur.txt
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
@@ -110,7 +110,7 @@ class PluginController:
         # Install packages with yay
         yay_command = ['sudo', 'yay', '--noconfirm', '-Sy']
         yay_command.extend(packages_aur)
-        subprocess.Popen(yay_command, shell=True, check=True)
+        subprocess.Popen(yay_command, shell=True)
 
 
 class Logger:
