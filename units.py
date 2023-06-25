@@ -108,7 +108,7 @@ class Logger:
             file.write(message + '\n')    
 
 def export(env_vars:dict):
-    for k,v in dict.items():
+    for k,v in env_vars.items():
         sh_code = f"""
         export {k}={v}
         """
