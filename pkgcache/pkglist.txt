@@ -147,6 +147,7 @@ ppp
 pptpclient
 python-capng
 python-packaging
+python-pip
 python-pyqt5
 qbittorrent
 rebuild-detector
