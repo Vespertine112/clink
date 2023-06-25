@@ -41,4 +41,4 @@ class starship(PluginScaffold):
             subprocess.run(command, shell=False, check=True)
 
         if (shell in [Shell.zsh, Shell.bash, Shell.fish] and op_sys == OS.linux):
-            subprocess.call(f"export STARSHIP_CONFIG=~{dotfilePath}/starship.toml")            
+            os.system(f"export STARSHIP_CONFIG=~{dotfilePath}/starship.toml")            
