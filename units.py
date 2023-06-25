@@ -5,6 +5,8 @@ import os
 import subprocess
 import sys
 from typing import List
+import python-pacman
+
 
 class Shell(Enum):
     zsh = 1
@@ -100,7 +102,7 @@ class PluginController:
         # Install packages with pacman
         pacman_command = ['sudo', 'pacman', '--noconfirm', '-Sy']
         pacman_command.extend(packages)
-        subprocess.run(pacman_command, shell=True, check=True)
+        subprocess.Popen(pacman_command, shell=True, check=True)
 
         # Read package names from pkglist_aur.txt
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
@@ -109,7 +111,7 @@ class PluginController:
         # Install packages with yay
         yay_command = ['sudo', 'yay', '--noconfirm', '-Sy']
         yay_command.extend(packages_aur)
-        subprocess.run(yay_command, shell=True, check=True)
+        subprocess.Popen(yay_command, shell=True, check=True)
 
 
 class Logger:
