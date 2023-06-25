@@ -40,10 +40,5 @@ class starship(PluginScaffold):
             ]
             subprocess.run(command, shell=False, check=True)
 
-        if (shell in [Shell.zsh, Shell.bash, Shell.fish] and op_sys == OS.linux):
-            command = [
-            'export',
-            f'STARSHIP_CONFIG=~{dotfilePath}/starship.toml'
-            ]
-            print(command)
-            subprocess.run(command, shell=True, check=True)
+        if (shell in [Shell.zsh, Shell.bash, Shell.fish] and op_sys == OS.linux):            
+            os.environ['STARSHIP_CONFIG'] = f'~{dotfilePath}/starship.toml'
