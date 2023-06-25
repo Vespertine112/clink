@@ -122,8 +122,8 @@ def export(env_vars:dict):
         subprocess.run(['sh', sh_filename], check=True)
 
         # Delete the sh file
-        subprocess.run(['rm', sh_filename])
+        # subprocess.run(['rm', sh_filename])
 
         # Alternatively, for Windows, use the following to delete the sh file:
-        subprocess.run(['del', sh_filename], shell=True)
+        # subprocess.run(['del', sh_filename], shell=True)
         
