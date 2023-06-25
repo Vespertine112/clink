@@ -99,7 +99,7 @@ class PluginController:
             packages = file.read().splitlines()
 
         # Install packages with pacman
-        pacman_command = ['pacman', '--noconfirm', '-S']
+        pacman_command = ['pacman', '--noconfirm', '-Sy']
         pacman_command.extend(packages)
         subprocess.run(pacman_command, shell=True)
 
