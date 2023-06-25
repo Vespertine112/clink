@@ -13,10 +13,10 @@ logger = Logger(log_file)
 
 def main():
     parser = argparse.ArgumentParser(description="Clink, a config migration framework")
-    parser.add_argument("-t", "--test", type=str, help="Test argument")
     parser.add_argument("-s", "--sync", action="store_true", help="Sync packages and configuration")
     parser.add_argument("-c", "--clank", action="store_true", help="Run the config migration")
     parser.add_argument("-l", "--list", action="store_true", help="List the packages which will be manually configured on clank")
+    parser.add_argument("-d", "--dotfiles", type=str, help="Path for dotfiles. Needs to be a relative path from home dir!!!")
     args = parser.parse_args()
 
     if (args.list):
@@ -26,15 +26,15 @@ def main():
         sync()
         exit(1)
     
-    if (args.clank):
-        clank()
+    if (args.clank and args.dotfiles):
+        clank(args.dotfiles)
         exit(1)
 
 def list():
     PluginController().list_plugins()
 
-def clank():
-    print("Here!")
+def clank(dotfilesPath):
+    PluginController().run_plugins(dotfilesPath)
     pass
 
 def sync():
