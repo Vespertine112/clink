@@ -1,4 +1,4 @@
-from units import PluginScaffold, Shell, OS
+from units import PluginScaffold, Shell, OS, export
 import subprocess
 import os
 
@@ -44,3 +44,4 @@ class starship(PluginScaffold):
             path = f'~{dotfilePath}/starship.toml'
             print(path)
             os.environ['STARSHIP_CONFIG'] = path 
+            export({"STARSHIP_CONFIG": f"~{dotfilePath}/starship.toml"})

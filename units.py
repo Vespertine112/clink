@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 import os
+import subprocess
 import sys
 from typing import List
 
@@ -105,3 +106,24 @@ class Logger:
     def log(self, message):
         with open(self.log_file, 'a') as file:
             file.write(message + '\n')    
+
+def export(env_vars:dict):
+    for k,v in dict.items():
+        sh_code = f"""
+        export {k}={v}
+        """
+
+        # Write the sh code to a temporary file
+        sh_filename = 'export.sh'
+        with open(sh_filename, 'w') as sh_file:
+            sh_file.write(sh_code)
+
+        # Execute the sh file
+        subprocess.run(['sh', sh_filename], check=True)
+
+        # Delete the sh file
+        subprocess.run(['rm', sh_filename])
+
+        # Alternatively, for Windows, use the following to delete the sh file:
+        subprocess.run(['del', sh_filename], shell=True)
+        
