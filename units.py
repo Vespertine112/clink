@@ -99,18 +99,18 @@ class PluginController:
             packages = file.read().splitlines()
 
         # Install packages with pacman
-        pacman_command = ['pacman', '--noconfirm', '-Sy']
+        pacman_command = ['pacman', '--noconfirm', '-S']
         pacman_command.extend(packages)
         subprocess.run(pacman_command, shell=True)
 
         # Read package names from pkglist_aur.txt
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
-            packages_aur = file.read().splitlines()
+        # with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pkgcache', 'pkglist_aur.txt'), 'r') as file:
+        #     packages_aur = file.read().splitlines()
 
         # Install packages with yay
-        yay_command = ['yay', '--noconfirm', '-Sy']
-        yay_command.extend(packages_aur)
-        subprocess.run(yay_command, shell=True)
+        # yay_command = ['yay', '--noconfirm', '-Sy']
+        # yay_command.extend(packages_aur)
+        # subprocess.run(yay_command, shell=True)
 
 
 class Logger:
